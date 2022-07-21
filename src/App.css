@@ -6,6 +6,10 @@
   --main-white: #F9FDFF;
 }
 
+body {
+  background-color: rgb(240, 240, 240);
+}
+
 *, *::after, *::before {
   margin: 0;
   padding: 0;
@@ -20,21 +24,50 @@ nav, #nav-title, #nav-links {
 }
 
 nav {
-  justify-content: left;
-  padding: 1rem 5rem;
+  justify-content: space-between;
+  padding: 1rem 5%;
+  background-color: white;
   box-shadow: 0 0 10px rgba(0,0,0,0.75);
   clip-path: inset(0px 0px -15px 0px);
 } #nav-title, #nav-links {
   justify-content: center;
 }
-
-
 #nav-title-image {
   height: 2rem;
   width: 2rem;
 } #nav-title-text {
   font-size: 2rem;
   font-weight: 200;
+} #nav-links {
+  gap: 2vw;
+} #nofaptracker {
+  background-color: white;
+  height: 20rem;
+  box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+  border-radius: 0.25rem;
+  width: calc(100vw - 2rem);
+  margin: 0 auto;
+  margin-top: 1rem;
+
+  padding: 2rem;
+} #nofap-unconfigured {
+  display: flex;
+  justify-content: space-between;
+  
+} #nofap-unconfigured-text p {
+  max-width: 25rem;
+} #nofap-unconfigured img {
+  height: 16rem;
+  width: 16rem;
+  margin-right: 6rem;
+} #nofap-progress-circle-container {
+  position: relative;
+} #nofap-progress-circle-container::after {
+  content: '95.4%';
+  position: absolute;
+  top: 7rem;
+  left: 7rem;
+  font-size: 3rem;
 }
 
 

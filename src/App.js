@@ -1,18 +1,27 @@
 import './App.css';
 import './LoginPage.css';
-import Navbar from './Navbar';
-import LoginPage from './LoginPage';
+import { useState } from 'react';
+import Navbar from './components/Navbar';
+import LoginPage from './components/LoginPage';
+import Homepage from './components/Homepage';
+
+
 function App() {
-  const loggedIn = false
+  const [loggedIn, setLoggedIn] = useState(false)
+  console.log(loggedIn)
   return (
     <div className="App">
+
+      {/*
       {loggedIn ? (
         <Navbar />
       ) : (
-        <LoginPage />
-      )}
+        <LoginPage loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
+      )} */}
+      <Homepage />
+      
     </div>
-  );
+  ); 
 }
 
 export default App;
