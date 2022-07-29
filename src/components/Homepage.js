@@ -2,11 +2,11 @@ import React from 'react';
 import Navbar from './Navbar';
 import NoFapTracker from './NoFapTracker';
 
-const Homepage = () => {
+const Homepage = ({ nfConfigured, setNfConfigured }) => {
   return (
     <div className='homepage'>
       <Navbar displayLinks={true} />
-      <NoFapTracker />
+      <NoFapTracker nfConfigued={nfConfigured} setNfConfigured={setNfConfigured}/>
     </div>
   )
 }

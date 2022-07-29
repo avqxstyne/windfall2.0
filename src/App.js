@@ -1,24 +1,32 @@
 import './App.css';
 import './LoginPage.css';
 import { useState } from 'react';
-import Navbar from './components/Navbar';
 import LoginPage from './components/LoginPage';
 import Homepage from './components/Homepage';
 
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false)
-  console.log(loggedIn)
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [nfConfigured, setNfConfigured] = useState(false);
+
+  
+
+  console.log(localStorage.id);
+
   return (
     <div className="App">
 
-      {/*
+      
       {loggedIn ? (
-        <Navbar />
+        <Homepage nfConfigured={nfConfigured} setNfConfigured={setNfConfigured}/>
       ) : (
-        <LoginPage loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
-      )} */}
-      <Homepage />
+        <LoginPage 
+          loggedIn={loggedIn} 
+          setLoggedIn={setLoggedIn}
+         
+        />
+      )}
+      
       
     </div>
   ); 

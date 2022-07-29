@@ -51,7 +51,7 @@
     
 }
 
-#login-page-main-island-form button {
+/* #login-page-main-island-form  */button {
    width: fit-content;
    border-radius: 99999px;
    background-color: var(--main-blue);
@@ -63,7 +63,7 @@
    margin-top: 2rem;
    transition: 0.3s;
 }
-#login-page-main-island-form button:hover {
+/* #login-page-main-island-form */ button:hover {
     background-color: transparent;
     color: var(--main-blue);
     
