@@ -213,3 +213,20 @@ app.post("/nfgoal", (req, res) => {
   })
 
 })
+
+/* =======================================================================================================================================
+       ROUTE for fetching day goal
+   =======================================================================================================================================
+*/
+
+app.post("/relapse", (req, res) => {
+  const db = new sqlite3.Database('./sql.db'); 
+    
+  db.run(`UPDATE app_users
+          SET nfgoalstarted = ${new Date().getTime()}
+          WHERE id = ${req.body.user_id}`)
+
+  res.send({
+    "status": "all good"
+  })
+})

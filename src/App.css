@@ -100,6 +100,7 @@ nav {
 } #nfc-progress-bar div {
   background-color: #5091F3;
   width: 0%;
+  max-width: 100%;
   height: 100%;
 } #nfc-reset-text {
   max-width: 16rem;

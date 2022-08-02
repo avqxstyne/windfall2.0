@@ -5,8 +5,6 @@ import { useState } from 'react';
 const NoFapTracker = () => {
     const [noFapDayGoal, setNoFapDayGoal] = useState('');
     const [nfConfig, setNfConfig] = useState(false);
-    const [dayGoal, setDayGoal] = useState(0)
-    const [nfProgress, setNfProgress] = useState(0)
 
     useEffect(() => {
         const user = localStorage.id;
@@ -22,7 +20,6 @@ const NoFapTracker = () => {
         }).then(res => {
             return res.json()
         }).then(resJson => {
-            console.log(`This users config status: ${resJson.isnfconfigured}`);
             setNfConfig(resJson.isnfconfigured)
         },
 
@@ -37,13 +34,24 @@ const NoFapTracker = () => {
         }).then(res => {
             return res.json()
         }).then(resJson => {
+
+            let percentCompleted = Math.round((percentage((new Date().getTime()) - resJson.timeStarted, (resJson.dayGoal  * 24 * 60 * 60 * 1000))) * 100) / 100;    
+            document.getElementById("nfc-progress-bar-inner").style.width = `${percentCompleted}%`;
+            document.getElementById('nfc-goal-progress').innerText = `% of goal completed: ${percentCompleted}%`
+
             console.log(`This users day goal: ${resJson.dayGoal}`);
-            setDayGoal(resJson.dayGoal)
-            console.log(`time is :${(new Date().getTime()) - resJson.timeStarted}`);
+            console.log(`percentage of goal completed: ${percentCompleted}%`);
+            console.log(`time is : ${(new Date().getTime()) - resJson.timeStarted}`);
+
+            console.log(new Date().getTime());
+            console.log(resJson.timeStarted);
         })
       )
     })
 
+    function percentage(partialValue, totalValue) {
+        return (100 * partialValue) / totalValue;
+     } 
 
     function handleDayGoal(e) {
         if (isNaN(noFapDayGoal)) {
@@ -65,7 +73,22 @@ const NoFapTracker = () => {
             })
             e.preventDefault();
         }
-      }
+    }
+
+    function handleRelapse() {
+        const user = localStorage.id;
+        fetch('http://localhost:5000/relapse', {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+            user_id: user
+        })
+        }).then(res => {
+            return res.json()
+        })
+    }
 
     return (
         <div id='nofaptracker'>
@@ -86,6 +109,7 @@ const NoFapTracker = () => {
                         <div id='nfc-reset-text-container'>
                         <div id='nfc-reset-text'>If you relapse, click here to reset your streak. Just remember that the streak is not what defines your progress</div>
                         <button id='relapse'
+                        onClick={handleRelapse}
                         >Relapse</button>
                         </div>
                         <form method='POST' id='nfc-new-goal'>
