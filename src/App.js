@@ -1,34 +1,31 @@
 import './App.css';
 import './LoginPage.css';
-import { useState } from 'react';
+import { createContext, useState } from 'react';
 import LoginPage from './components/LoginPage';
 import Homepage from './components/Homepage';
 
+export const logContext = createContext()
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [nfConfigured, setNfConfigured] = useState(false);
-
-  
-
-  console.log(localStorage.id);
+  const nfConfigured = false;
 
   return (
-    <div className="App">
+    <logContext.Provider value={nfConfigured}>
+    
+        <div className="App">
 
-      
-      {loggedIn ? (
-        <Homepage nfConfigured={nfConfigured} setNfConfigured={setNfConfigured}/>
-      ) : (
-        <LoginPage 
-          loggedIn={loggedIn} 
-          setLoggedIn={setLoggedIn}
-         
-        />
-      )}
-      
-      
-    </div>
+          {loggedIn ? (
+            <Homepage />
+          ) : (
+            <LoginPage 
+              loggedIn={loggedIn} 
+              setLoggedIn={setLoggedIn}
+            />
+          )}
+          
+        </div>
+      </logContext.Provider>
   ); 
 }
 

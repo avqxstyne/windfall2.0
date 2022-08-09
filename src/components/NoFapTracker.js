@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import progressCircle from '../images/progress-circle.svg';
 import { useState } from 'react';
+import { logContext } from '../App';
 
 const NoFapTracker = () => {
     const [noFapDayGoal, setNoFapDayGoal] = useState('');
     const [nfConfig, setNfConfig] = useState(false);
+
+    const nfcGoalRef = useRef()
 
     useEffect(() => {
         const user = localStorage.id;
@@ -16,7 +19,7 @@ const NoFapTracker = () => {
         },
         body: JSON.stringify({
             user_id: user
-        })
+        }) 
         }).then(res => {
             return res.json()
         }).then(resJson => {
@@ -37,17 +40,18 @@ const NoFapTracker = () => {
 
             let percentCompleted = Math.round((percentage((new Date().getTime()) - resJson.timeStarted, (resJson.dayGoal  * 24 * 60 * 60 * 1000))) * 100) / 100;    
             document.getElementById("nfc-progress-bar-inner").style.width = `${percentCompleted}%`;
-            document.getElementById('nfc-goal-progress').innerText = `% of goal completed: ${percentCompleted}%`
+            nfcGoalRef.current.innerText = `% of goal completed: ${percentCompleted}%`
+            /* 
+            These are just a bunch of tests to ensure the progress bar is ok
 
             console.log(`This users day goal: ${resJson.dayGoal}`);
             console.log(`percentage of goal completed: ${percentCompleted}%`);
-            console.log(`time is : ${(new Date().getTime()) - resJson.timeStarted}`);
-
-            console.log(new Date().getTime());
-            console.log(resJson.timeStarted);
+            console.log(`time is : ${(new Date().getTime()) - resJson.timeStarted}`); 
+            */
         })
       )
     })
+
 
     function percentage(partialValue, totalValue) {
         return (100 * partialValue) / totalValue;
@@ -91,86 +95,94 @@ const NoFapTracker = () => {
     }
 
     return (
-        <div id='nofaptracker'>
-            {nfConfig === '1' ? (
-                <div id='nofap-configured'>
-                    <div id='nfc-text-left'>
-                        <h1>NoFap Statistics</h1>
-                        <div id='nfc-current-streak'>Current Streak: {100}d</div>
-                        <div id='nfc-longest-streak'>Longest Streak: {1000}d</div>
-                        <div id='nfc-goal-progress'>% Of Goal Completed: {45}%</div>
-                    </div>
-                    <div id='nfc-progress'>
-                       <div id='nfc-progress-bar'>
-                        <div id='nfc-progress-bar-inner'></div>
-                       </div>
-                    </div>
-                    <div id='nfc-reset'>
-                        <div id='nfc-reset-text-container'>
-                        <div id='nfc-reset-text'>If you relapse, click here to reset your streak. Just remember that the streak is not what defines your progress</div>
-                        <button id='relapse'
-                        onClick={handleRelapse}
-                        >Relapse</button>
-                        </div>
-                        <form method='POST' id='nfc-new-goal'>
-                            <input 
-                                type="text" 
-                                required 
-                                placeholder='New NoFap Day Goal'
-                                onChange={(e) => {
-                                    setNoFapDayGoal(e.target.value)
-                                }}
-                                name="nofapdaygoal"
-                                value={noFapDayGoal}>
-                            </input>
-                            <button 
-                                type='submit'
-                                id='nfc-new-goal-submit'
-                                onClick={(e) => {
-                                handleDayGoal(e);
-                                if (nfConfig === false) setNfConfig(true)
-                                
-                                }}
-                            >Set New Goal</button>
-                        </form>
-                    </div>
-                </div>
-            ) : (
-                <div id='nofap-unconfigured'>
-                    <div id='nofap-unconfigured-text'>
-                        <h1>NoFap</h1>
-                        <p>
-                            You haven't configured a no-fap tracker yet. 
-                            Click a few buttons here to get it up and running 
-                            so that you can track your progress
-                        </p>
-                        <form method='POST'>
-                            <input 
-                                type="text" 
-                                required 
-                                placeholder='NoFap Day Goal'
-                                onChange={(e) => {
-                                    setNoFapDayGoal(e.target.value)
-                                }}
-                                name="nofapdaygoal"
-                                value={noFapDayGoal}>
-                            </input>
-                            <button 
-                                type='submit'
-                                onClick={(e) => {
-                                handleDayGoal(e);
-                                setNfConfig(true)
-                                }}
-                            >Start</button>
-                        </form>
-                    </div>
+        <logContext.Consumer>
+            {nfConfigured => {
+                console.log(nfConfigured);
+                return (                
+                    <div id='nofaptracker'>
+                        {nfConfig === '1' ? (
+                            <div id='nofap-configured'>
+                                <div id='nfc-text-left'>
+                                    <h1>NoFap Statistics</h1>
+                                    <div id='nfc-current-streak'>Current Streak: {100}d</div>
+                                    <div id='nfc-longest-streak'>Longest Streak: {1000}d</div>
+                                    <div id='nfc-goal-progress' ref={nfcGoalRef}>% Of Goal Completed: {45}%</div>
+                                </div>
                     
-                    <div id='nofap-progress-circle-container'>
-                        <img id="nofap-progress-circle" src={progressCircle} alt="progress circle" />
-                    </div>
-                </div>
-            )}
-        </div>
+                                <div id='nfc-progress'>
+                                <div id='nfc-progress-bar'>
+                                    <div id='nfc-progress-bar-inner'></div>
+                                </div>
+                                </div>
+                                <div id='nfc-reset'>
+                                    <div id='nfc-reset-text-container'>
+                                    <div id='nfc-reset-text'>If you relapse, click here to reset your streak. Just remember that the streak is not what defines your progress</div>
+                                    <button id='relapse'
+                                    onClick={handleRelapse}
+                                    >Relapse</button>
+                                    </div>
+                                    <form method='POST' id='nfc-new-goal'>
+                                        <input 
+                                            type="text" 
+                                            required 
+                                            placeholder='New NoFap Day Goal'
+                                            onChange={(e) => {
+                                                setNoFapDayGoal(e.target.value)
+                                            }}
+                                            name="nofapdaygoal"
+                                            value={noFapDayGoal}>
+                                        </input>
+                                        <button 
+                                            type='submit'
+                                            id='nfc-new-goal-submit'
+                                            onClick={(e) => {
+                                            handleDayGoal(e);
+                                            if (nfConfig === false) setNfConfig(true)
+                                            
+                                            }}
+                                        >Set New Goal</button>
+                                    </form>
+                                </div>
+                            </div>
+                        ) : (
+                            <div id='nofap-unconfigured'>
+                                <div id='nofap-unconfigured-text'>
+                                    <h1>NoFap</h1>
+                                    <p>
+                                        You haven't configured a no-fap tracker yet. 
+                                        Click a few buttons here to get it up and running 
+                                        so that you can track your progress
+                                    </p>
+                                    <form method='POST'>
+                                        <input 
+                                            type="text" 
+                                            required 
+                                            placeholder='NoFap Day Goal'
+                                            onChange={(e) => {
+                                                setNoFapDayGoal(e.target.value)
+                                            }}
+                                            name="nofapdaygoal"
+                                            value={noFapDayGoal}>
+                                        </input>
+                                        <button 
+                                            type='submit'
+                                            onClick={(e) => {
+                                            handleDayGoal(e);
+                                            setNfConfig(true)
+                                            }}
+                                        >Start</button>
+                                    </form>
+                                </div>
+                                
+                                <div id='nofap-progress-circle-container'>
+                                    <img id="nofap-progress-circle" src={progressCircle} alt="progress circle" />
+                                </div>
+                            </div>
+                        )}
+            </div>
+             )
+            }}
+        </logContext.Consumer>
     )
 }
 
