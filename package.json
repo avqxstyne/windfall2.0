@@ -2,7 +2,7 @@
   "name": "si_build",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://avqxstyne.github.io/windy",
+  "homepage": "https://avqxstyne.github.io/windfall2.0",
   "proxy": "http://localhost:5000/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
@@ -50,6 +50,7 @@
   "devDependencies": {
     "crypto-browserify": "^3.12.0",
     "nodemon": "^2.0.19",
-    "path-browserify": "^1.0.1"
+    "path-browserify": "^1.0.1",
+    "sass": "^1.54.3"
   }
 }

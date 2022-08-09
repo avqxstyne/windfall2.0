@@ -1,5 +1,5 @@
-import './App.css';
-import './LoginPage.css';
+import './scss/App.scss';
+import './scss/LoginPage.scss';
 import { createContext, useState } from 'react';
 import LoginPage from './components/LoginPage';
 import Homepage from './components/Homepage';
