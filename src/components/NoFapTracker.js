@@ -37,10 +37,12 @@ const NoFapTracker = () => {
         }).then(res => {
             return res.json()
         }).then(resJson => {
-
-            let percentCompleted = Math.round((percentage((new Date().getTime()) - resJson.timeStarted, (resJson.dayGoal  * 24 * 60 * 60 * 1000))) * 100) / 100;    
-            document.getElementById("nfc-progress-bar-inner").style.width = `${percentCompleted}%`;
-            nfcGoalRef.current.innerText = `% of goal completed: ${percentCompleted}%`
+            if (nfConfig === true) {
+                let percentCompleted = Math.round((percentage((new Date().getTime()) - resJson.timeStarted, (resJson.dayGoal  * 24 * 60 * 60 * 1000))) * 100) / 100;    
+                document.getElementById("nfc-progress-bar-inner").style.width = `${percentCompleted}%`;
+                nfcGoalRef.current.innerText = `% of goal completed: ${percentCompleted}%`
+            }
+           
             /* 
             These are just a bunch of tests to ensure the progress bar is ok
 
