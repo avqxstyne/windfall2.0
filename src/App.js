@@ -1,5 +1,6 @@
 import './scss/App.scss';
 import './scss/LoginPage.scss';
+import './scss/Habits.scss';
 import { createContext, useState } from 'react';
 import LoginPage from './components/LoginPage';
 import Homepage from './components/Homepage';
@@ -8,11 +9,8 @@ export const logContext = createContext()
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const nfConfigured = false;
 
-  return (
-    <logContext.Provider value={nfConfigured}>
-    
+  return (    
         <div className="App">
 
           {loggedIn ? (
@@ -25,7 +23,6 @@ function App() {
           )}
           
         </div>
-      </logContext.Provider>
   ); 
 }
 
