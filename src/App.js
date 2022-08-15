@@ -5,21 +5,15 @@ import { createContext, useState } from 'react';
 import LoginPage from './components/LoginPage';
 import Homepage from './components/Homepage';
 
-export const logContext = createContext()
-
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
 
   return (    
         <div className="App">
 
-          {loggedIn ? (
+          {localStorage.logged ? (
             <Homepage />
           ) : (
-            <LoginPage 
-              loggedIn={loggedIn} 
-              setLoggedIn={setLoggedIn}
-            />
+            <LoginPage />
           )}
           
         </div>

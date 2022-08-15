@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import Navbar from './Navbar';
 
-const LoginPage = ({ loggedIn, setLoggedIn }) => {
+const LoginPage = () => {
 
   /* States for the input fields */
   const [username, setUsername] = useState('');
@@ -22,10 +22,9 @@ const LoginPage = ({ loggedIn, setLoggedIn }) => {
       return res.json()
     }).then(resJson => {
       if (resJson.response === "success") {
-        setLoggedIn(true);
+        localStorage.logged = true;
         
       };
-      console.log(loggedIn);
     })
     e.preventDefault();
   }
@@ -44,10 +43,10 @@ const LoginPage = ({ loggedIn, setLoggedIn }) => {
       return res.json()
     }).then(resJson => {
       if (resJson.response === "success") {
-        setLoggedIn(true);
-
         localStorage.clear();
         localStorage.id = resJson.id; 
+        localStorage.logged = true;
+        console.log(localStorage);
         
       };
     })

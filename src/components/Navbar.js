@@ -1,5 +1,4 @@
 import logo from '../images/logo.svg';
-
 const Navbar = ({ displayLinks }) => {
     
     return (
@@ -10,13 +9,13 @@ const Navbar = ({ displayLinks }) => {
             </div>
             {displayLinks ? (
                 <div id='nav-links'>
-                    <div className='nav-link' id='physical'>Physical</div>
+                    <div className='nav-link' id='physical'>Daily Habits</div>
                     <div className='nav-link' id='mental'>Mental</div>
                     <div className='nav-link' id='spiritual'>Spiritual</div>
                     <div className='nav-link' id='social'>Social</div>
                 </div>
             ) : (
-                <div></div>
+                <></>
             )}
         </nav>
     )
