@@ -22,9 +22,13 @@ const LoginPage = () => {
       return res.json()
     }).then(resJson => {
       if (resJson.response === "success") {
+        localStorage.clear();
+        localStorage.id = resJson.id; 
         localStorage.logged = true;
-        
-      };
+        console.log(localStorage);
+      } else if (resJson.response === "failure") {
+        alert(resJson.reason)
+      }
     })
     e.preventDefault();
   }
@@ -47,8 +51,9 @@ const LoginPage = () => {
         localStorage.id = resJson.id; 
         localStorage.logged = true;
         console.log(localStorage);
-        
-      };
+      } else if (resJson.response === "failure") {
+        alert(resJson.reason)
+      }
     })
     e.preventDefault();
   }
@@ -63,44 +68,30 @@ const LoginPage = () => {
         <div id='login-page-main-island-content1'>
           <h1>Welcome to Windfall</h1>
           <p>Level up your life</p>
-          <form 
-            id='login-page-main-island-form'
-            method='POST'>
+          <form id='login-page-main-island-form' method='POST'>
 
-            <input 
-              type="text" 
-              required 
-              placeholder='Username'
+            <input type="text" required placeholder='Username' name="username" value={username}
               onChange={(e) => {
                 setUsername(e.target.value)
-              }}
-              name="username"
-              value={username}
-            ></input>
+              }}></input>
 
-            <input 
-              type="password" 
-              required 
-              placeholder='Password'
+            <input type="password" required placeholder='Password' name="password" value={password}
               onChange={(e) => {
                 setPassword(e.target.value)
-              }}
-              name="password"
-              value={password}
-            ></input>
+              }}></input>
+
             <div id='login-page-main-island-buttons'>
-              <button 
-                type='submit'
+        
+              <button type='submit'
                 onClick={(e) => {
                 handleLogin(e)
-                }}
-              >Log In</button>
-              <button 
-                type='submit'
+                }}>Log In</button>
+
+              <button type='submit'
                 onClick={(e) => {
                 handleRegister(e)
-              }}
-              >Sign Up</button>
+              }}>Register</button>
+
             </div>
           </form>
         </div>

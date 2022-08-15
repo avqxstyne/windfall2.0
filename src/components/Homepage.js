@@ -4,7 +4,7 @@ import Navbar from './Navbar';
 import NoFapTracker from './NoFapTracker';
 import WeeklyHabits from './WeeklyHabits';
 
-const Homepage = ({ nfConfigured, setNfConfigured }) => {
+const Homepage = () => {
   return (
     <div className='homepage'> 
       <Navbar displayLinks={true} />

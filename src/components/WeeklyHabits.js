@@ -1,10 +1,7 @@
 import React from 'react'
 
 const WeeklyHabits = () => {
-  function test() {
-    document.getElementById('hydration').addEventListener('click', function() {
-    this.classList.add("animate-test"); // p
-  })}
+ 
   return (
     <div id='weekly'>
         <div className='weekly-habit' id='hydration'>

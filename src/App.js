@@ -1,14 +1,13 @@
 import './scss/App.scss';
 import './scss/LoginPage.scss';
 import './scss/Habits.scss';
-import { createContext, useState } from 'react';
 import LoginPage from './components/LoginPage';
 import Homepage from './components/Homepage';
 
 function App() {
-
+  console.log(localStorage);
   return (    
-        <div className="App">
+        <div className="App"> 
 
           {localStorage.logged ? (
             <Homepage />

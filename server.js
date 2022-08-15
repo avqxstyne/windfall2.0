@@ -22,29 +22,57 @@ app.post("/register", (req, res) => {
     function users() {
       return new Promise(function(resolve, reject) {
         let users = [];
-        db.each("SELECT username FROM app_users", function(err, row) {
+        db.each("SELECT username, password FROM app_users", function(err, row) {
           if (err) reject(err);
-          else users.push(row.username);
+          else users.push({
+            username: row.username,
+            password: row.password
+          });
         }, function(err) {
           if (err) reject(err);
           else resolve(users);
         });
       })
-    } 
+    }
+
+    function id() {
+      return new Promise(function(resolve, reject) {
+        let id; 
+        db.each(`SELECT id FROM app_users WHERE username = ${req.body.username}`, function(err, row) {
+          if (err) reject(err);
+          else id = row.id
+        }, function(err) {
+          if (err) reject(err);
+          else resolve(id);
+        });
+      })
+    }
 
     /* On then it checks if name is taken and inserts it */
     users().then(response => {
-      if (response.includes(req.body.username)) {  
+      let nameTaken = false;
+      for (let i = 0; i < response.length; i++) {
+        if (response[i].username == req.body.username) {
+          nameTaken = true;
+        }
+      }
+      if (nameTaken === false) {
+        db.serialize(() => {
+          db.run(`INSERT INTO app_users (username, password) VALUES ("${req.body.username}", "${req.body.password}")`)
+        })
+        id().then(response => {
+          console.log(`${response}, line 64`);
+          res.json({
+            "response": "success",
+            "reason": "username availible, saved",
+            "id": `${response}`
+          });
+        })
+      } else {
         res.json({
           "response": "failure",
           "reason": "username already taken"
         });
-      } else {
-        res.json({
-          "response": "success",
-          "reason": "username not taken, inserted into database"
-        });
-        db.run(`INSERT INTO app_users (username, password) VALUES("${req.body.username}", "${req.body.password}")`)
       }
     })
 
