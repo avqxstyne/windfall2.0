@@ -48,7 +48,7 @@ app.post("/register", (req, res) => {
       })
     }
 
-    /* On then it checks if name is taken and inserts it */
+    /* what */
     users().then(response => {
       let nameTaken = false;
       for (let i = 0; i < response.length; i++) {
