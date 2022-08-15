@@ -1,12 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
 import Navbar from './Navbar';
-
-const LoginPage = () => {
+import App from '../App.js'
+const LoginPage = ({ setUpdate }) => {
 
   /* States for the input fields */
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    setUpdate(true)
+    console.log(true);
+  })
+  
+
 
   function handleRegister(e) {
     fetch('http://localhost:5000/register', {
@@ -23,8 +30,6 @@ const LoginPage = () => {
     }).then(resJson => {
       if (resJson.response === "success") {
         localStorage.clear();
-        localStorage.id = resJson.id; 
-        localStorage.logged = true;
         console.log(localStorage);
       } else if (resJson.response === "failure") {
         alert(resJson.reason)
@@ -51,6 +56,9 @@ const LoginPage = () => {
         localStorage.id = resJson.id; 
         localStorage.logged = true;
         console.log(localStorage);
+        return (
+          <App />
+        )
       } else if (resJson.response === "failure") {
         alert(resJson.reason)
       }

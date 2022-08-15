@@ -15,73 +15,57 @@ app.listen(PORT, () => console.log(`Server listening at port ${PORT}`));
 */
 app.post("/register", (req, res) => {
 
-    /* Configure database connection with sqlite3 */
-    const db = new sqlite3.Database('./sql.db'); 
-    
-    /* This function returns a promise of the names of every user in the db */
-    function users() {
-      return new Promise(function(resolve, reject) {
-        let users = [];
-        db.each("SELECT username, password FROM app_users", function(err, row) {
-          if (err) reject(err);
-          else users.push({
-            username: row.username,
-            password: row.password
-          });
-        }, function(err) {
-          if (err) reject(err);
-          else resolve(users);
-        });
-      })
-    }
+  const db = new sqlite3.Database('./sql.db'); 
 
-    function id() {
-      return new Promise(function(resolve, reject) {
-        let id; 
-        db.each(`SELECT id FROM app_users WHERE username = ${req.body.username}`, function(err, row) {
-          if (err) reject(err);
-          else id = row.id
-        }, function(err) {
-          if (err) reject(err);
-          else resolve(id);
-        });
-      })
-    }
 
-    /* what */
-    users().then(response => {
-      let nameTaken = false;
-      for (let i = 0; i < response.length; i++) {
-        if (response[i].username == req.body.username) {
-          nameTaken = true;
-        }
-      }
-      if (nameTaken === false) {
-        db.serialize(() => {
-          db.run(`INSERT INTO app_users (username, password) VALUES ("${req.body.username}", "${req.body.password}")`)
-        })
-        id().then(response => {
-          console.log(`${response}, line 64`);
-          res.json({
-            "response": "success",
-            "reason": "username availible, saved",
-            "id": `${response}`
-          });
-        })
-      } else {
-        res.json({
-          "response": "failure",
-          "reason": "username already taken"
+   /* This function returns a promise of the names and passwords of every user in the db */
+   function users() {
+    return new Promise(function(resolve, reject) {
+      let users = [];
+      db.each("SELECT username, password, id FROM app_users", function(err, row) {
+        if (err) reject(err);
+        else users.push({
+          username: row.username,
+          password: row.password,
+          id: row.id
         });
-      }
+      }, function(err) {
+        if (err) reject(err);
+        else resolve(users);
+      });
     })
+  }
 
-    /* Closing database connection */
-    db.close((err) => {
-      if (err) return console.log(err.message);
-      console.log("Closed database connection.");
-    });
+  /* On then it checks if name is taken and inserts it */
+  users().then(response => {
+    let userExists = false;
+    for (let i = 0; i < response.length; i++) {
+      if (response[i].username == req.body.username) {
+        userExists = true;
+      }
+    }
+    if (userExists === true) { 
+      res.json({
+        "response": "failure",
+        "reason": "username taken ",
+      })
+    } else {
+      db.run(`INSERT INTO app_users (username, password) VALUES ("${req.body.username}", "${req.body.password}")`)
+
+      res.json({
+        "response": "success",
+        "reason": "registered"
+      })
+    };
+  })
+
+  /* Closing database connection */
+  db.close((err) => {
+    if (err) return console.log(err.message);
+    console.log("Closed database connection.");
+  });
 })
+    
 
 /* =======================================================================================================================================
       LOGIN ROUTE
