@@ -10,7 +10,7 @@ const NoFapTracker = () => {
     const nfcGoalRef = useRef();
 
     useEffect(() => {
-        const user = localStorage.id;
+        const user = localStorage.getItem("id");
         console.log(`This users id: ${user}`);
         fetch(`http://localhost:5000/isnfconfig`, {
         method: "POST",
@@ -25,28 +25,9 @@ const NoFapTracker = () => {
         }).then(resJson => {
             setNfConfig(resJson.isnfconfigured)
         },
-
-        fetch('http://localhost:5000/nfgoal', {
-        method: "POST",
-        headers: {
-            "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-            user_id: user
-        })
-        }).then(res => {
-            return res.json()
-        }).then(resJson => {
-            let percentCompleted = Math.round((percentage((new Date().getTime()) - resJson.timeStarted, (resJson.dayGoal  * 24 * 60 * 60 * 1000))) * 100) / 100;    
-            document.getElementById("nfc-progress-bar-inner").style.width = `${percentCompleted}%`;
-            nfcGoalRef.current.innerText = `% of goal completed: ${percentCompleted}%`
-            
-        })
     )})
     
-    function percentage(partialValue, totalValue) {
-        return (100 * partialValue) / totalValue;
-     } 
+  
 
     function handleDayGoal(e) {
         if (isNaN(noFapDayGoal)) {

@@ -10,7 +10,6 @@ const Homepage = () => {
       <Navbar displayLinks={true} />
       <WeeklyHabits />
       <NoFapTracker />
-      {/* <Habits /> */}
     </div>
   )
 }

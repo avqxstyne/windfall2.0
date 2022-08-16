@@ -6,12 +6,16 @@ import Homepage from './components/Homepage';
 
 function App() {  
   console.log(localStorage);
+  setTimeout(()=>{
+    console.log(localStorage);
+
+  }, 100)
   switch (window.location.pathname) {
     case '/':
       return (
         <LoginPage />
       )
-    case '/home':
+    case '/home/':
       return (
         <Homepage />
       )

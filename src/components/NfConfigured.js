@@ -1,7 +1,36 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const NfConfigured = ({ nfcGoalRef, handleRelapse, handleDayGoal, setNoFapDayGoal, setNfConfig, nfConfig, noFapDayGoal }) => {
-  return (
+  
+    function percentage(partialValue, totalValue) {
+        return (100 * partialValue) / totalValue;
+     } 
+
+    useEffect(() => {
+        const user = localStorage.id;
+        fetch('http://localhost:5000/nfgoal', {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+            user_id: user
+        })
+        }).then(res => {
+            return res.json()
+        }).then(resJson => {
+            let percentCompleted = Math.round((percentage((new Date().getTime()) - resJson.timeStarted, (resJson.dayGoal  * 24 * 60 * 60 * 1000))) * 100) / 100;    
+            document.getElementById("nfc-progress-bar-inner").style.width = `${percentCompleted}%`;
+            nfcGoalRef.current.innerText = `% of goal completed: ${percentCompleted}%`
+            
+        })
+    })
+  
+  
+  
+  
+  
+    return (
     <div id='nofap-configured'>
         <div id='nfc-text-left'>
             <h1>NoFap Statistics</h1>

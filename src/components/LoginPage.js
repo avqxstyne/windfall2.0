@@ -37,10 +37,16 @@ const LoginPage = () => {
     }).then(resJson => {
 
       if (resJson.response === "success") {
-        localStorage.clear();
-        localStorage.id = resJson.id; 
-        localStorage.logged = true;
-        window.location.pathname = '/home'
+        
+        localStorage.setItem("id", resJson.id)
+        setTimeout(()=>{
+          console.log(localStorage)
+        }, 477)
+        
+        window.location.href = '/home/';
+        setTimeout(()=>{
+          console.log(localStorage)
+        }, 2477)
       } else if (resJson.response === "failure") {
         alert(resJson.reason)
       }
