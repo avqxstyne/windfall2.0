@@ -1,14 +1,18 @@
 import React from 'react';
 import Navbar from './Navbar';
 import NoFapTracker from './NoFapTracker';
-import WeeklyHabits from './WeeklyHabits';
+import DailyHabits from './DailyHabits';
+import DailyHabitsMenu from './DailyHabitsMenu';
 
 const Homepage = () => {
   return (
     <div className='homepage'> 
       <Navbar displayLinks={true} />
-      <WeeklyHabits />
-      <NoFapTracker />
+      <div id='homepage-container'>
+        <DailyHabits />
+        <DailyHabitsMenu />
+        <NoFapTracker />
+      </div>
     </div>
   )
 }

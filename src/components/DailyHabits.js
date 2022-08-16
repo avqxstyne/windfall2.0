@@ -1,6 +1,6 @@
 import React from 'react'
 
-const WeeklyHabits = () => {
+const DailyHabits = () => {
  
   return (
     <div id='weekly'>
@@ -40,4 +40,4 @@ const WeeklyHabits = () => {
   )
 }
 
-export default WeeklyHabits
+export default DailyHabits

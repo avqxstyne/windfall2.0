@@ -20,15 +20,11 @@ const NfConfigured = ({ nfcGoalRef, handleRelapse, handleDayGoal, setNoFapDayGoa
             return res.json()
         }).then(resJson => {
             let percentCompleted = Math.round((percentage((new Date().getTime()) - resJson.timeStarted, (resJson.dayGoal  * 24 * 60 * 60 * 1000))) * 100) / 100;    
-            document.getElementById("nfc-progress-bar-inner").style.width = `${percentCompleted}%`;
+            document.getElementById("nfc-progress-bar-inner").style.height = `${percentCompleted}%`;
             nfcGoalRef.current.innerText = `% of goal completed: ${percentCompleted}%`
             
         })
     })
-  
-  
-  
-  
   
     return (
     <div id='nofap-configured'>

@@ -19,15 +19,10 @@ const Navbar = ({ displayLinks }) => {
                     <a className='nav-link' id='logout' href='/' onClick={clear} >Log Out</a>
                 </div>
             ) : (
-                <>                    <a className='nav-link' id='physical' href='/habits'>Daily Habits</a>
-                </>
+            <></>
             )}
         </nav>
     )
 }
 
 export default Navbar;
-/* 
-<div id='nav-links'>
-                
-            </div> */

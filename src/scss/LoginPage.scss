@@ -48,7 +48,7 @@
 }
 
 
-/* #login-page-main-island-form  */button {
+button:not(.dh-button) {
    width: fit-content;
    border-radius: 99999px;
    background-color: var(--main-blue);
