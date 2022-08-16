@@ -56,7 +56,7 @@ nav {
 
 #nofaptracker, #weekly, #dailyhabitsmenu {
   background-color: white;
-  box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 7px rgba(0,0,0,0.3);
   border-radius: 0.25rem; 
   padding: 2rem;
 } 
@@ -192,20 +192,12 @@ nav {
 .weekly-habit-desc {
   grid-area: 2 / 1 / span 1 / span 1; 
 }
-.weekly-habit:nth-of-type(1) {  background-color: rgb(45, 177, 225);}
+.weekly-habit:nth-of-type(1) {  background-color: rgb(52, 145, 216);}
 .weekly-habit:nth-of-type(2) {background-color: #9b50f1;}
-.weekly-habit:nth-of-type(3) {background-color: rgb(54, 221, 99);}
+.weekly-habit:nth-of-type(3) {background-color: rgb(52, 190, 89);}
 .weekly-habit:nth-of-type(4) {background-color: rgb(222, 180, 43);}
 .weekly-habit:nth-of-type(5) {background-color: rgb(16, 133, 51);}
 .weekly-habit:nth-of-type(6) {background-color: #3DC7DB;}
-
-@keyframes habit-expand {
-  0% {
-
-  } 100% {
-
-  }
-}
 
 .animate-test {
   transition: 0.5s;
@@ -229,9 +221,11 @@ nav {
   gap: 0.5rem;
   
 } .dh-habit:nth-of-type(2) {
-  box-shadow: 2px 2px 0px rgba(0,0,0,0.75);
-  clip-path: inset(0px 0px -10px 0px);
-  padding-bottom: 1rem;
+  /* box-shadow: 2px 2px 0px rgba(0,0,0,0.75);
+  clip-path: inset(0px 0px 0px 0px);*/
+  padding-bottom: 1rem; 
+
+  border-bottom: 2px solid black;
 }
 
 .dh-button {
@@ -242,4 +236,5 @@ nav {
   appearance: none;
   width: 1.5rem;
   height: 1.5rem;
+  transition: 0.2s ease-in-out;
 }

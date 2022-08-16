@@ -1,15 +1,16 @@
-import './scss/App.scss';
-import './scss/LoginPage.scss';
+import './scss/app.scss';
+import './scss/loginPage.scss';
+import './scss/animations.scss'
 import LoginPage from './components/LoginPage';
 import Homepage from './components/Homepage';
 
 function App() {  
   switch (window.location.pathname) {
-    case '/':
+    case '/windfall2.0/':
       return (
         <LoginPage />
       )
-    case '/home/':
+    case '/windfall2.0/home/':
       return (
         <Homepage />
       )

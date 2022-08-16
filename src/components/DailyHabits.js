@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const DailyHabits = () => {
+
  
   return (
     <div id='weekly'>
