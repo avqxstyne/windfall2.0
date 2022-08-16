@@ -1,70 +1,54 @@
-import React, { useEffect } from 'react'
+import React, { useRef } from 'react'
 import { useState } from 'react';
 import Navbar from './Navbar';
-import App from '../App.js'
-const LoginPage = ({ setUpdate }) => {
+
+const LoginPage = () => {
 
   /* States for the input fields */
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  useEffect(() => {
-    setUpdate(true)
-    console.log(true);
-  })
-  
-
-
+  const p = useRef(null) 
   function handleRegister(e) {
     fetch('http://localhost:5000/register', {
       method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password
-      })
+      headers: {"Content-type": "application/json"},
+      body: JSON.stringify({username: username, password: password})
     }).then(res => {
       return res.json()
     }).then(resJson => {
+
       if (resJson.response === "success") {
-        localStorage.clear();
-        console.log(localStorage);
+        p.current.innerText = "Registered! Please log in."
       } else if (resJson.response === "failure") {
         alert(resJson.reason)
       }
-    })
+    });
     e.preventDefault();
   }
 
   function handleLogin(e) {
     fetch('http://localhost:5000/login', {
       method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password
-      })
+      headers: {"Content-type": "application/json"},
+      body: JSON.stringify({username: username, password: password})
     }).then(res => {
       return res.json()
     }).then(resJson => {
+
       if (resJson.response === "success") {
         localStorage.clear();
         localStorage.id = resJson.id; 
         localStorage.logged = true;
-        console.log(localStorage);
-        return (
-          <App />
-        )
+        window.location.pathname = '/home'
       } else if (resJson.response === "failure") {
         alert(resJson.reason)
       }
-    })
+
+    });
     e.preventDefault();
   }
+
 
   return (
     <div id='login-page'>
@@ -75,7 +59,7 @@ const LoginPage = ({ setUpdate }) => {
 
         <div id='login-page-main-island-content1'>
           <h1>Welcome to Windfall</h1>
-          <p>Level up your life</p>
+          <p ref={p}>Level up your life</p>
           <form id='login-page-main-island-form' method='POST'>
 
             <input type="text" required placeholder='Username' name="username" value={username}

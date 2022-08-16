@@ -1,6 +1,7 @@
 import logo from '../images/logo.svg';
+import { useRef } from 'react';
+
 const Navbar = ({ displayLinks }) => {
-    
     return (
         <nav>
             <div id="nav-title">
@@ -9,13 +10,15 @@ const Navbar = ({ displayLinks }) => {
             </div>
             {displayLinks ? (
                 <div id='nav-links'>
-                    <div className='nav-link' id='physical'>Daily Habits</div>
+                    <a className='nav-link' id='physical' href='/bruh'>Daily Habits</a>
                     <div className='nav-link' id='mental'>Mental</div>
                     <div className='nav-link' id='spiritual'>Spiritual</div>
                     <div className='nav-link' id='social'>Social</div>
+                    <a className='nav-link' id='logout' href='/' onClick={localStorage.clear()} >Log Out</a>
                 </div>
             ) : (
-                <></>
+                <>                    <a className='nav-link' id='physical' href='/bruh'>Daily Habits</a>
+                </>
             )}
         </nav>
     )
