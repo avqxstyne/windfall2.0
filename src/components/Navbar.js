@@ -1,5 +1,4 @@
 import logo from '../images/logo.svg';
-import { useRef } from 'react';
 
 const Navbar = ({ displayLinks }) => {
     const clear = () => {
@@ -20,7 +19,7 @@ const Navbar = ({ displayLinks }) => {
                     <a className='nav-link' id='logout' href='/' onClick={clear} >Log Out</a>
                 </div>
             ) : (
-                <>                    <a className='nav-link' id='physical' href='/bruh'>Daily Habits</a>
+                <>                    <a className='nav-link' id='physical' href='/habits'>Daily Habits</a>
                 </>
             )}
         </nav>
