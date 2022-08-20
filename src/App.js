@@ -6,11 +6,11 @@ import Homepage from './components/Homepage';
 
 function App() {  
   switch (window.location.pathname) {
-    case '/windfall2.0/':
+    case '/windfall2.0':
       return (
         <LoginPage />
       )
-    case '/windfall2.0/home/':
+    case '/windfall2.0/home':
       return (
         <Homepage />
       )

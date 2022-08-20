@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from './Navbar';
 import NoFapTracker from './NoFapTracker';
 import DailyHabits from './DailyHabits';
@@ -7,10 +7,16 @@ import DailyHabitsMenu from './DailyHabitsMenu';
 const Homepage = () => {
   
   useEffect(() => {
-    fetch('https://localhost:5000/gethabits', {
-      method: "POST",
-      headers: {"Content-type": "application/json"},
-    })
+    fetch(`http://localhost:5000/gethabits?id=${localStorage.id}`, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+      },
+    }).then(res => {
+      return res.json()
+    }).then(resJson => {
+      document.getElementById('hydration').innerText = `${resJson.hydration}/2`
+    })  
   })
 
   return (

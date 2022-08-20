@@ -153,6 +153,7 @@ app.post("/nofap", (req, res) => {
    =======================================================================================================================================
 */
 app.post("/isnfconfig", (req, res) => {
+
   const db = new sqlite3.Database('./sql.db');
 
   console.log(req.body);
@@ -176,6 +177,7 @@ app.post("/isnfconfig", (req, res) => {
       "isnfconfigured": `${response}`
     })
   })
+
 
 
   db.close((err) => {
@@ -250,7 +252,33 @@ app.post("/relapse", (req, res) => {
 
 app.post("/habits", (req, res) => {
   const db = new sqlite3.Database('./sql.db'); 
-    
+  const type = req.body.type
+
+  console.log(type)
+
+    function habit() {
+
+      return new Promise(function(resolve, reject) {
+        let habit;
+        db.each(`SELECT ${type} FROM habits WHERE id = ${req.body.id}`, function(err, row) {
+          if (err) reject(err);
+          else {
+            habit = row[type];
+          }
+        }, function(err) {
+          if (err) reject(err);
+          else resolve(habit);
+        });
+      })
+    }
+
+    habit().then(response => {
+        db.run(`UPDATE habits SET ${type} = "${response + 1}" WHERE id = ${req.body.id}`);
+        res.send({
+          "status": "all good"
+        })
+    })
+
 
 })
 
@@ -259,8 +287,43 @@ app.post("/habits", (req, res) => {
    =======================================================================================================================================
 */
 
-app.post("/gethabits", (req, res) => {
+app.get("/gethabits", (req, res) => {
   const db = new sqlite3.Database('./sql.db'); 
     
+  function getHabits() {
+    return new Promise(function(resolve, reject) {
+      let habits = [];
+      db.each(`SELECT hydration, exercise, eating, mental, social, working FROM habits WHERE id = ${req.query.id}`, function(err, row) {
+        if (err) reject(err);
+        else habits.push({
+          hydration: row.hydration,
+          exercise: row.exercise,
+          eating: row.eating,
+          mental: row.mental,
+          social: row.social,
+          working: row.working,
+
+        });
+      }, function(err) {
+        if (err) reject(err);
+        else resolve(habits);
+      });
+  })}
+
+  getHabits().then(response => {
+    console.log(response);
+    res.json({
+      "hydration": `${response[0].hydration}`,
+      "exercise": `${response[0].exercise}`,
+      "eating": `${response[0].eating}`,
+      "mental": `${response[0].mental}`,
+      "social": `${response[0].social}`,
+      "working": `${response[0].working}`,
+    })
+  })
+  /* 
+  res.header({
+    "Access-Control-Allow-Origin": "*"
+  }) */
 
 })
