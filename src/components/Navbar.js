@@ -16,7 +16,7 @@ const Navbar = ({ displayLinks }) => {
                     <div className='nav-link' id='mental'>Mental</div>
                     <div className='nav-link' id='spiritual'>Spiritual</div>
                     <div className='nav-link' id='social'>Social</div>
-                    <a className='nav-link' id='logout' href='/' onClick={clear} >Log Out</a>
+                    <a className='nav-link' id='logout' href='/windfall2.0' onClick={clear} >Log Out</a>
                 </div>
             ) : (
             <></>

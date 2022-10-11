@@ -43,7 +43,7 @@ const LoginPage = () => {
           console.log(localStorage)
         }, 477)
         
-        window.location.href = '/windfall2.0/home/';
+        window.location.href = '/windfall2.0/home';
         setTimeout(()=>{
           console.log(localStorage)
         }, 2477)

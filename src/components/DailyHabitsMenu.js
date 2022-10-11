@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 
 /* const buttons = document.getElementsByClassName('dh-button');
 for (let i = 0; i < buttons.length; i++) {
@@ -25,6 +25,14 @@ const DailyHabitsMenu = () => {
       console.log(resJson.bruh)
     })
   }
+
+  const hydration = useRef()
+
+  useEffect(() => {
+    hydration.current = document.getElementsByClassName("hydration").length;
+    document.getElementById("hydration").innerText = `0/${hydration.current}`;
+  })
+  
  
   return (
     <div id='dailyhabitsmenu'>
@@ -40,6 +48,11 @@ const DailyHabitsMenu = () => {
             <button className='dh-button hydration' onClick={(e) => {buttonClick(e, "hydration")}}></button>
             <div>Drink 1 glass after waking</div>
         </div>
+        <div className='dh-habit'>
+            <button className='dh-button hydration' onClick={(e) => {buttonClick(e, "hydration")}}></button>
+            <div>Drink 1 glass after waking</div>
+        </div>
+        
         
         
          

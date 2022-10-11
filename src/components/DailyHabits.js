@@ -1,16 +1,23 @@
-import React, { useEffect } from 'react'
+import React, { useRef } from 'react'
 
 const DailyHabits = () => {
 
-  function secondNumber(type) {
-    return document.getElementsByClassName(`${type}`)
-  }
+  const hydration = useRef()
 
+  // setTimeout(() => {
+  //   console.log(document.getElementsByClassName("hydration"))
+  //   hydration.current = document.getElementsByClassName("hydration").length;
+  //   document.getElementById("hydration").innerText = `0/${hydration.current}`;
+  // }, 0);
+
+
+
+  
   return (
     <div id='weekly'>
         <div className='weekly-habit' >
           <p>Hydration</p>
-          <div className='weekly-habit-number'id='hydration'>0/{secondNumber("hydration").length}</div>
+          <div className='weekly-habit-number'id='hydration'>0/</div>
           <div className='weekly-habit-desc'>Drinking enough water per day</div>
         </div>
         <div className='weekly-habit' >
