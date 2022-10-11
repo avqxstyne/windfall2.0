@@ -34,8 +34,15 @@ const DailyHabitsMenu = () => {
         </div>
         <div className='dh-habit'>
             <button className='dh-button hydration' onClick={(e) => {buttonClick(e, "hydration")}}></button>
-            <div>Drink 6 glasses throughout day</div>
+            <div>Drink 1 glass after waking</div>
         </div>
+        <div className='dh-habit'>
+            <button className='dh-button hydration' onClick={(e) => {buttonClick(e, "hydration")}}></button>
+            <div>Drink 1 glass after waking</div>
+        </div>
+        
+        
+         
         <div className='dh-habit'>
             <button className='dh-button exercise' onClick={(e) => {buttonClick(e, "exercise")}} ></button>
             <div>exercise</div>

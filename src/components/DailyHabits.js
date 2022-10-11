@@ -2,12 +2,15 @@ import React, { useEffect } from 'react'
 
 const DailyHabits = () => {
 
- 
+  function secondNumber(type) {
+    return document.getElementsByClassName(`${type}`)
+  }
+
   return (
     <div id='weekly'>
         <div className='weekly-habit' >
           <p>Hydration</p>
-          <div className='weekly-habit-number'id='hydration'>0/2</div>
+          <div className='weekly-habit-number'id='hydration'>0/{secondNumber("hydration").length}</div>
           <div className='weekly-habit-desc'>Drinking enough water per day</div>
         </div>
         <div className='weekly-habit' >

@@ -1,10 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 const NfConfigured = ({ nfcGoalRef, handleRelapse, handleDayGoal, setNoFapDayGoal, setNfConfig, nfConfig, noFapDayGoal }) => {
   
     function percentage(partialValue, totalValue) {
         return (100 * partialValue) / totalValue;
      } 
+
+    function rounder(number) {
+        return Math.round(number * 1000) / 1000
+    }
+
+    const nfcCurrentRef = useRef();
 
     useEffect(() => {
         const user = localStorage.id;
@@ -21,8 +27,9 @@ const NfConfigured = ({ nfcGoalRef, handleRelapse, handleDayGoal, setNoFapDayGoa
         }).then(resJson => {
             let percentCompleted = Math.round((percentage((new Date().getTime()) - resJson.timeStarted, (resJson.dayGoal  * 24 * 60 * 60 * 1000))) * 100) / 100;    
             document.getElementById("nfc-progress-bar-inner").style.height = `${percentCompleted}%`;
-            nfcGoalRef.current.innerText = `% of goal completed: ${percentCompleted}%`
-            
+            nfcGoalRef.current.innerText = `% of goal completed: ${percentCompleted}%`;
+            nfcCurrentRef.current.innerText = `Current Streak: ${rounder(((new Date().getTime()) - resJson.timeStarted) / 1000 / 60 / 60 / 24)}d`
+
         })
     })
   
@@ -30,8 +37,7 @@ const NfConfigured = ({ nfcGoalRef, handleRelapse, handleDayGoal, setNoFapDayGoa
     <div id='nofap-configured'>
         <div id='nfc-text-left'>
             <h1>NoFap Statistics</h1>
-            <div id='nfc-current-streak'>Current Streak: {100}d</div>
-            <div id='nfc-longest-streak'>Longest Streak: {1000}d</div>
+            <div id='nfc-current-streak' ref={nfcCurrentRef}>Current Streak: {100}d</div>
             <div id='nfc-goal-progress' ref={nfcGoalRef}>% Of Goal Completed: {45}%</div>
         </div>
 
